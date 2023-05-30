@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
-import Button from "../ui/button";
+import Button from "../ui/button/Button";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -54,8 +54,10 @@ export default function Header({ children, className }: HeaderProps) {
                 onClick={() => {}}
                 className="bg-transparent text-neutral-300 font-medium"
               >
-                Sign Up
+                Sign up
               </Button>
+            </div>
+            <div>
               <Button onClick={() => {}} className="bg-white px-6 py-2">
                 Log in
               </Button>
