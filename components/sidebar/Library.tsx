@@ -1,9 +1,26 @@
 "use client";
 import { BsMusicPlayer } from "react-icons/bs";
 import { AiOutlinePlus } from "react-icons/ai";
+import useAuthModal from "@/hooks/useAuthModal";
+import { useUser } from "@/hooks/useUser";
+import useUploadModal from "@/hooks/useUploadModal";
 
 export default function Library() {
-  const handleClick = (event: any) => {};
+  const authModal = useAuthModal();
+  const uploadModal = useUploadModal();
+
+  const { user } = useUser();
+
+  const handleClick = (event: any) => {
+    if (!user) {
+      return authModal.onOpen();
+    }
+
+    // check for subscription
+
+    return uploadModal.onOpen();
+  };
+
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-between px-5 pt-4">
