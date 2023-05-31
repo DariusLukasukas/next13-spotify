@@ -1,8 +1,12 @@
 "use client";
 
-import Modal from "../ui/modal/Modal";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
+import uniqid from "uniqid";
+import { useRouter } from "next/navigation";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+
+import Modal from "../ui/modal/Modal";
 import Input from "../ui/input/Input";
 import Button from "../ui/button/Button";
 import { toast } from "react-hot-toast";
@@ -10,15 +14,12 @@ import { toast } from "react-hot-toast";
 import useUploadModal from "@/hooks/useUploadModal";
 import { useUser } from "@/hooks/useUser";
 
-import uniqid from "uniqid";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
-
 export default function UploadModal() {
   const [isLoading, setIsLoading] = useState(false);
   const uploadModal = useUploadModal();
   const { user } = useUser();
-
   const supabaseClient = useSupabaseClient();
+  const router = useRouter();
 
   const { register, handleSubmit, reset } = useForm<FieldValues>({
     defaultValues: {
@@ -77,6 +78,27 @@ export default function UploadModal() {
         setIsLoading(false);
         return toast.error("Failed to upload image");
       }
+
+      const { error: supabaseError } = await supabaseClient
+        .from("songs")
+        .insert({
+          user_id: user.id,
+          title: values.title,
+          author: values.author,
+          image_path: imageData.path,
+          song_path: songData.path,
+        });
+
+      if (supabaseError) {
+        setIsLoading(false);
+        return toast.error(supabaseError.message);
+      }
+
+      router.refresh();
+      setIsLoading(false);
+      toast.success("Song created!");
+      reset();
+      uploadModal.onClose();
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
