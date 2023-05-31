@@ -3,14 +3,13 @@
 import { useGetSongById } from "@/hooks/client/useGetSongById";
 import { useLoadSongUrl } from "@/hooks/client/useLoadSongUrl";
 import { usePlayer } from "@/hooks/usePlayer";
+import PlayerContent from "./PlayerContent";
 
 export default function Player() {
   const player = usePlayer();
   const { song } = useGetSongById(player.activeId);
 
   const songUrl = useLoadSongUrl(song!);
-
-  console.log(song, songUrl, player.activeId);
 
   if (!song || !songUrl || !player.activeId) {
     return null;
@@ -28,7 +27,7 @@ export default function Player() {
         px-4
       "
     >
-      Player
+      <PlayerContent key={songUrl} song={song} songUrl={songUrl} />
     </div>
   );
 }
