@@ -71,15 +71,19 @@ export default function Header({ children, className }: HeaderProps) {
         <div className="flex justify-between items-center gap-x-4">
           {user ? (
             <div className="flex gap-x-4 items-center">
-              <Button onClick={handleSignOut} className="bg-white px-6 py-2">
-                Sign out
-              </Button>
-              <Button
-                onClick={() => router.push("/account")}
-                className="bg-white"
-              >
-                <FaUser />
-              </Button>
+              <div>
+                <Button onClick={handleSignOut} className="bg-white px-6 py-2">
+                  Sign out
+                </Button>
+              </div>
+              <div>
+                <Button
+                  onClick={() => router.push("/account")}
+                  className="bg-white"
+                >
+                  <FaUser />
+                </Button>
+              </div>
             </div>
           ) : (
             <>
@@ -91,14 +95,14 @@ export default function Header({ children, className }: HeaderProps) {
                   Sign up
                 </Button>
               </div>
-              <div>
+              <>
                 <Button
                   onClick={authModal.onOpen}
                   className="bg-white px-6 py-2"
                 >
                   Log in
                 </Button>
-              </div>
+              </>
             </>
           )}
         </div>
