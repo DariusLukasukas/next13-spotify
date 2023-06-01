@@ -1,6 +1,6 @@
 ## Advanced Full-Stack Music Streaming Platform
 
-next13-spotify stands as a comprehensive demonstration of full-stack development principles, centered around a Spotify clone application. This project is engineered using cutting-edge technologies including Next.js 13.4, React, Tailwind, Supabase, PostgreSQL, and Stripe, creating a versatile and robust music streaming platform.
+This project is a comprehensive demonstration of full-stack development principles, centered around a Spotify clone application. It is engineered using cutting-edge technologies including Next.js 13.4, React, Tailwind, Supabase, PostgreSQL, and Stripe, creating a versatile and robust music streaming platform.
 
 ### Key technical highlights of the project include:
 
