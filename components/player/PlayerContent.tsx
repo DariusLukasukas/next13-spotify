@@ -148,15 +148,15 @@ export default function PlayerContent({ song, songUrl }: PlayerContentProps) {
       </div>
       <div className="flex md:hidden col-auto w-full justify-end items-center">
         <div
-          onClick={() => {}}
+          onClick={handlePlay}
           className="h-10 w-10 flex items-center justify-center rounded-full bg-white p-1 cursor-pointer"
         >
-          <Icon size={30} className="text-black" />
+          <Icon size={24} className="text-black" />
         </div>
       </div>
 
       {/* DESKTOP */}
-      <div className="hidden h-full md:flex flex-col justify-center items-center w-full max-w-[722px] gap-x-6">
+      <div className="hidden md:flex flex-col justify-start items-center h-full w-full max-w-[722px]">
         <div className="flex justify-center items-center w-full gap-x-6">
           <AiFillStepBackward
             size={24}
@@ -165,7 +165,7 @@ export default function PlayerContent({ song, songUrl }: PlayerContentProps) {
           />
           <div
             onClick={handlePlay}
-            className="flex items-center justify-center rounded-full bg-white h-10 w-10 p-1 cursor-pointer"
+            className="flex items-center justify-center rounded-full bg-white h-8 w-8 p-1 cursor-pointer"
           >
             <Icon size={24} className="text-black" />
           </div>
@@ -176,7 +176,7 @@ export default function PlayerContent({ song, songUrl }: PlayerContentProps) {
           />
         </div>
 
-        <div className="flex items-center w-full text-xs font-light space-x-1 -mt-2 text-neutral-400">
+        <div className="flex items-center w-full text-xs font-light space-x-1 text-neutral-400">
           <div>{formatTime(currentTime * 1000)}</div>
           <AudioSlider
             min={0}

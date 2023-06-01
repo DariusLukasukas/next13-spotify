@@ -47,7 +47,7 @@ export const AudioSlider = ({
       onPointerDown={onChangeStart}
       onPointerUp={onChangeEnd}
       orientation="horizontal"
-      className="relative flex items-center select-none touch-none w-full h-10"
+      className="relative flex items-center select-none touch-none w-full h-6"
     >
       <Slider.Track className="bg-neutral-600 relative grow rounded-full h-[3px]">
         <Slider.Range className="absolute bg-white rounded-full h-full" />
