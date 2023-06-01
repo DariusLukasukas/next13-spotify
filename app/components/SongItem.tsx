@@ -25,6 +25,7 @@ export default function SongItem({ data, onClick }: SongItemProps) {
           fill
           src={imagePath || "/images/liked.png"}
           className="object-cover"
+          priority
         />
       </div>
       <div className="flex flex-col items-start w-full pt-4 gap-y-1">

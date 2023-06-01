@@ -12,6 +12,7 @@ import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 
 import { usePlayer } from "@/hooks/usePlayer";
 import useSound from "use-sound";
+import { AudioSlider } from "./AudioSlider";
 
 interface PlayerContentProps {
   song: Song;
@@ -22,10 +23,13 @@ export default function PlayerContent({ song, songUrl }: PlayerContentProps) {
   const player = usePlayer();
   const [volume, setVolume] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [isSeeking, setIsSeeking] = useState(false);
 
   const Icon = isPlaying ? BsPauseFill : BsPlayFill;
   const VolumeIcon = volume === 0 ? HiSpeakerXMark : HiSpeakerWave;
 
+  //   BACK AND FORWARD LOGIC
   const onPlayNext = () => {
     if (player.ids.length === 0) {
       return;
@@ -56,7 +60,8 @@ export default function PlayerContent({ song, songUrl }: PlayerContentProps) {
     player.setId(previousSong);
   };
 
-  const [play, { pause, sound }] = useSound(songUrl, {
+  //   MUSIC PLAYER LOGIC
+  const [play, { pause, sound, duration }] = useSound(songUrl, {
     volume: volume,
     onplay: () => setIsPlaying(true),
     onend: () => {
@@ -81,13 +86,56 @@ export default function PlayerContent({ song, songUrl }: PlayerContentProps) {
       pause();
     }
   };
+  //   TRACK TIMELINE
+  useEffect(() => {
+    if (sound && !isSeeking) {
+      const interval = setInterval(() => {
+        setCurrentTime(sound.seek() || 0);
+      }, 1000);
 
+      return () => {
+        clearInterval(interval);
+      };
+    }
+  }, [sound, isSeeking]);
+
+  const formatTime = (timeInMilliseconds: number) => {
+    const totalSeconds = Math.floor(timeInMilliseconds / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+
+    const formattedMinutes = String(minutes).padStart(2, "0");
+    const formattedSeconds = String(seconds).padStart(2, "0");
+
+    return `${formattedMinutes}:${formattedSeconds}`;
+  };
+
+  //   VOLUME CONTROL
   const toggleMute = () => {
     if (volume === 0) {
       setVolume(1);
     } else {
       setVolume(0);
     }
+  };
+
+  const handleSliderChangeStart = () => {
+    setIsSeeking(true);
+  };
+
+  const handleSliderChange = (event: any) => {
+    const newTime = Number(event.target.value);
+    setCurrentTime(newTime);
+    if (sound) {
+      sound.seek(newTime);
+    }
+  };
+
+  const handleSliderChangeEnd = () => {
+    if (sound) {
+      sound.seek(currentTime);
+    }
+    setIsSeeking(false);
   };
 
   return (
@@ -122,9 +170,22 @@ export default function PlayerContent({ song, songUrl }: PlayerContentProps) {
         </div>
         <AiFillStepForward
           size={30}
-          className="text-neutral-400 cursor-pointer hover:text-white transition"
+          className="text-neutral-400 cursor-pointer hover:text-white transition space-x-4"
           onClick={onPlayNext}
         />
+
+        <div className="flex items-center w-full text-xs">
+          <div>{formatTime(currentTime * 1000)}</div>
+          <AudioSlider
+            min={0}
+            max={duration || 0}
+            value={currentTime}
+            onChangeStart={handleSliderChangeStart}
+            onChange={handleSliderChange}
+            onChangeEnd={handleSliderChangeEnd}
+          />
+          <div>{formatTime(duration!)}</div>
+        </div>
       </div>
 
       <div className="hidden md:flex w-full justify-end pr-2">
