@@ -156,25 +156,27 @@ export default function PlayerContent({ song, songUrl }: PlayerContentProps) {
       </div>
 
       {/* DESKTOP */}
-      <div className="hidden h-full md:flex justify-center items-center w-full max-w-[722px] gap-x-6">
-        <AiFillStepBackward
-          size={30}
-          className="text-neutral-400 cursor-pointer hover:text-white transition"
-          onClick={onPlayPrevious}
-        />
-        <div
-          onClick={handlePlay}
-          className="flex items-center justify-center rounded-full bg-white h-10 w-10 p-1 cursor-pointer"
-        >
-          <Icon size={30} className="text-black" />
+      <div className="hidden h-full md:flex flex-col justify-center items-center w-full max-w-[722px] gap-x-6">
+        <div className="flex justify-center items-center w-full gap-x-6">
+          <AiFillStepBackward
+            size={24}
+            className="text-neutral-400 cursor-pointer hover:text-white transition"
+            onClick={onPlayPrevious}
+          />
+          <div
+            onClick={handlePlay}
+            className="flex items-center justify-center rounded-full bg-white h-10 w-10 p-1 cursor-pointer"
+          >
+            <Icon size={24} className="text-black" />
+          </div>
+          <AiFillStepForward
+            size={24}
+            className="text-neutral-400 cursor-pointer hover:text-white transition space-x-4"
+            onClick={onPlayNext}
+          />
         </div>
-        <AiFillStepForward
-          size={30}
-          className="text-neutral-400 cursor-pointer hover:text-white transition space-x-4"
-          onClick={onPlayNext}
-        />
 
-        <div className="flex items-center w-full text-xs">
+        <div className="flex items-center w-full text-xs font-light space-x-1 -mt-2 text-neutral-400">
           <div>{formatTime(currentTime * 1000)}</div>
           <AudioSlider
             min={0}
