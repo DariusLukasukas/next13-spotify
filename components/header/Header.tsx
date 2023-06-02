@@ -95,14 +95,14 @@ export default function Header({ children, className }: HeaderProps) {
                   Sign up
                 </Button>
               </div>
-              <>
+              <div>
                 <Button
                   onClick={authModal.onOpen}
                   className="bg-white px-6 py-2"
                 >
                   Log in
                 </Button>
-              </>
+              </div>
             </>
           )}
         </div>
